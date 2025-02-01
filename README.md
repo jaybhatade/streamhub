@@ -1,8 +1,16 @@
-# React + Vite
+# StreamHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StreamHub is a cutting-edge movie streaming platform that offers a user-friendly interface and an extensive library of movies. This application is designed for project purposes only and does not promote piracy.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **HD Free Movie Streaming**: Enjoy high-definition movies without any cost.
+- **User-Friendly Interface**: Navigate easily through the app with a clean and intuitive design.
+- **Extensive Movie Library**: Access a wide range of movies across various genres.
+
+## Technologies Used
+
+- React
+- Tailwind CSS
+- React Router
+- Firebase
