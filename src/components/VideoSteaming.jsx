@@ -12,9 +12,6 @@ const PlayerPage = () => {
 
   const movie = movieList.find(movie => movie.id === id);
 
-  console.log('Found Movie:', movie);
-
-  // Remove before production
 
   if (!movie) {
     return (

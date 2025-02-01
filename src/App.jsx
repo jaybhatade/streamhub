@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import LoadingBar from 'react-top-loading-bar'
+import LoadingBar from 'react-top-loading-bar';
 import Loader from './components/Loader';
 import { createBrowserRouter, RouterProvider, Outlet, useLocation, Navigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -14,7 +14,7 @@ import SearchPage from './pages/SearchPage';
 import AboutPage from './pages/About';
 import AuthPage from './Auth/AuthPage';
 import Profile from './pages/Profile';
-import Imdbmovie from './components/imdbmovie';
+import Jaybhatade from './components/SeriesSteaming';
 
 const ProtectedRoute = ({ children }) => {
   const [user, loading] = useAuthState(auth);
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
 const Layout = () => {
   const [progress, setProgress] = useState(0);
   const location = useLocation();
-  const isPlayerPage = location.pathname.startsWith('/player/');
+  const isPlayerPage = location.pathname.startsWith('/player/') || location.pathname.startsWith('/series/');
 
   React.useEffect(() => {
     setProgress(100);
@@ -53,12 +53,12 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/player/:id", element: <PlayerPage /> },
+      { path: "/series/:id/:season/:episode", element: <Jaybhatade /> },
       { path: "/profile", element: <Profile /> },
       { path: "/about", element: <AboutPage /> },
       { path: "/movies", element: <MoviePage /> },
       { path: "/streamybot", element: <Chatbot /> },
       { path: "/search", element: <SearchPage /> },
-      { path: "/imdb/:id", element: <Imdbmovie /> },
     ],
   },
   {

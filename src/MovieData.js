@@ -922,6 +922,44 @@ export const movieList = [
 
 ];
 
+export const seriesList = [
+  {
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjk1NzA4Njg4Ml5BMl5BanBnXkFtZTgwMDgxODQ5MzE@._V1_SX300.jpg",
+    "plot": "Hinata Hyuga's younger sister has been kidnapped, so Naruto must do what he can to save her.",
+    "id": "tt3717532",
+    "title": "The Last: Naruto the Movie",
+    "genre": "Animation, Action, Adventure",
+    "released": "2015-10-06",
+    "language": "Japanese",
+    "runtime": "112 min"
+  },
+  {
+    "poster": "https://m.media-amazon.com/images/M/MV5BY2Y0NGE5YjgtNzFlZS00NzJjLThlMDQtZDZhNjQxNTc2NmUwXkEyXkFqcGc@._V1_SX300.jpg",
+    "plot": "It's been some years since the end of the Shinobi War. Naruto Uzumaki is the 7th Hokage of Konohagakure, in this new era. His son, Boruto Uzumaki, will soon enter the Chûnin exams, alongside Sarada Uchiha and the mysterious Mitsuki.",
+    "id": "tt0409591",
+    "title": "Boruto: Naruto the Movie",
+    "genre": "Animation, Action, Adventure",
+    "released": "2017-03-28",
+    "language": "Japanese",
+    "runtime": "95 min",
+    "season": "1",
+    "episode": "52"
+  },
+  {
+    "poster": "https://m.media-amazon.com/images/M/MV5BM2FiMjQ0ZjAtYzc1OC00NzgzLWIyNmQtYmIwYjdhZWM5MmRiXkEyXkFqcGc@._V1_SX300.jpg",
+    "plot": "The mercurial villain Loki resumes his role as the God of Mischief in a new series that takes place after the events of 'Avengers: Endgame.'",
+    "id": "tt9140554",
+    "title": "Loki",
+    "genre": "Action, Adventure, Fantasy",
+    "released": "2021-06-09",
+    "language": "English",
+    "runtime": "N/A",
+    "season": "2",
+    "episode": "6"
+  }
+  
+];
+
 export const series = [
   {
     poster:
