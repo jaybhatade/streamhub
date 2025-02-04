@@ -6,14 +6,13 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDVJCtM8oliZeM3oWrR4YZ1Mti2qZVaFkQ",
-  authDomain: "streambox-70a34.firebaseapp.com",
-  databaseURL: "https://streambox-70a34-default-rtdb.firebaseio.com",
-  projectId: "streambox-70a34",
-  storageBucket: "streambox-70a34.appspot.com",
-  messagingSenderId: "339579014087",
-  appId: "1:339579014087:web:42800c2d82c5867d78e7e2",
-  measurementId: "G-T9X28VPQS2",
+  apiKey: "AIzaSyB0zfp5OTYgF7njr-0_WHiBNY7cuANVY5k",
+  authDomain: "streamhub7-e3809.firebaseapp.com",
+  projectId: "streamhub7-e3809",
+  storageBucket: "streamhub7-e3809.firebasestorage.app",
+  messagingSenderId: "296844431217",
+  appId: "1:296844431217:web:821cd2a0bdfa967e1b30d0",
+  measurementId: "G-TGXTMTNCCP"
 };
 
 // Initialize Firebase
