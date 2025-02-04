@@ -924,27 +924,29 @@ export const movieList = [
 
 export const seriesList = [
   {
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjk1NzA4Njg4Ml5BMl5BanBnXkFtZTgwMDgxODQ5MzE@._V1_SX300.jpg",
-    "plot": "Hinata Hyuga's younger sister has been kidnapped, so Naruto must do what he can to save her.",
-    "id": "tt3717532",
-    "title": "The Last: Naruto the Movie",
+    "poster": "https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_SX300.jpg",
+    "plot": "Naruto Uzumaki, a mischievous adolescent ninja, struggles as he searches for recognition and dreams of becoming the Hokage, the village's leader and strongest ninja.",
+    "id": "tt0409591",
+    "title": "Naruto",
     "genre": "Animation, Action, Adventure",
-    "released": "2015-10-06",
+    "released": "2025-08-10",
     "language": "Japanese",
-    "runtime": "112 min"
+    "runtime": "24 min",
+    "season": "1",
+    "episode": "52",
   },
   {
-    "poster": "https://m.media-amazon.com/images/M/MV5BY2Y0NGE5YjgtNzFlZS00NzJjLThlMDQtZDZhNjQxNTc2NmUwXkEyXkFqcGc@._V1_SX300.jpg",
-    "plot": "It's been some years since the end of the Shinobi War. Naruto Uzumaki is the 7th Hokage of Konohagakure, in this new era. His son, Boruto Uzumaki, will soon enter the Chûnin exams, alongside Sarada Uchiha and the mysterious Mitsuki.",
-    "id": "tt0409591",
-    "title": "Boruto: Naruto the Movie",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMzE0ZDU1MzQtNTNlYS00YjNlLWE2ODktZmFmNDYzMTBlZTBmXkEyXkFqcGc@._V1_SX300.jpg",
+    "plot": "Covering the continuing adventures of series protagonist Ash Ketchum and Pikachu, and his best friend Brock, the two meet a new coordinator named Dawn, who travels with them through Sinnoh and enters Pokemon Contests.",
+    "id": "tt0168366",
+    "title": "Pokémon",
     "genre": "Animation, Action, Adventure",
-    "released": "2017-03-28",
-    "language": "Japanese",
-    "runtime": "95 min",
+    "released": "1998-09-08",
+    "language": "English",
+    "runtime": "24 min",
     "season": "1",
-    "episode": "52"
-  },
+    "episode": "82"
+  },  
   {
     "poster": "https://m.media-amazon.com/images/M/MV5BM2FiMjQ0ZjAtYzc1OC00NzgzLWIyNmQtYmIwYjdhZWM5MmRiXkEyXkFqcGc@._V1_SX300.jpg",
     "plot": "The mercurial villain Loki resumes his role as the God of Mischief in a new series that takes place after the events of 'Avengers: Endgame.'",

@@ -6,6 +6,7 @@ import { movieList } from "../MovieData";
 const SeriesPlayer = ({ series, season, episode }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(`${season}-${episode}`);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,6 +19,9 @@ const SeriesPlayer = ({ series, season, episode }) => {
   if (!series) {
     return <div className="text-white text-center py-10">Series not found</div>;
   }
+
+  const episodeCount = series.episode;
+  const displayedEpisodes = showMore ? episodeCount : Math.min(episodeCount, 20);
 
   return (
     <div className='w-full h-fit'>
@@ -51,28 +55,30 @@ const SeriesPlayer = ({ series, season, episode }) => {
           </div>
           <div className='w-full px-2 mt-4'>
             <h3 className='text-white text-lg font-bold'>Episodes</h3>
-            <div className='flex flex-wrap gap-2 mt-2'>
-              {Array.from({ length: series.episode }, (_, i) => i + 1).map((ep) => (
+            <div className='flex flex-wrap gap-4 mt-2 '>
+              {Array.from({ length: displayedEpisodes }, (_, i) => i + 1).map((ep) => (
                 <button
                   key={ep}
-                  className={`w-20 h-8 rounded-lg text-white border ${selectedEpisode === `${season}-${ep}` ? 'bg-red-600' : 'border-gray-600 hover:bg-gray-700'}`}
+                  className={`w-20 h-10 rounded-lg text-white border ${selectedEpisode === `${season}-${ep}` ? 'bg-red-600' : 'border-gray-600 hover:bg-gray-700'}`}
                   onClick={() => setSelectedEpisode(`${season}-${ep}`)}
                 >
                   {`Ep ${ep}`}
                 </button>
               ))}
             </div>
+            {episodeCount > 20 && !showMore && (
+              <button onClick={() => setShowMore(true)} className="mt-2 text-red-600 hover:text-red-400">
+                Show More
+              </button>
+            )}
           </div>
         </div>
       </div>
-        <ScrollComponent movies={movieList} startIndex={9} endIndex={20} headingTitle={"Marvel Movies"}/>
-
-<ScrollComponent movies={movieList} startIndex={20} endIndex={35} headingTitle={"Action Movies"}/>
-
-<ScrollComponent movies={movieList} startIndex={35} endIndex={46} headingTitle={"Bollywood Action Movies"}/>
-  <ScrollComponent movies={movieList} startIndex={46} endIndex={56} headingTitle={"Bollywood Horror Movies"} />
-  
-  <ScrollComponent movies={movieList} startIndex={56} endIndex={67} headingTitle={"Horror Movies"} />
+      <ScrollComponent movies={movieList} startIndex={9} endIndex={20} headingTitle={"Marvel Movies"} />
+      <ScrollComponent movies={movieList} startIndex={20} endIndex={35} headingTitle={"Action Movies"} />
+      <ScrollComponent movies={movieList} startIndex={35} endIndex={46} headingTitle={"Bollywood Action Movies"} />
+      <ScrollComponent movies={movieList} startIndex={46} endIndex={56} headingTitle={"Bollywood Horror Movies"} />
+      <ScrollComponent movies={movieList} startIndex={56} endIndex={67} headingTitle={"Horror Movies"} />
     </div>
   );
 };
