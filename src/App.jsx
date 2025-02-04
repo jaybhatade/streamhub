@@ -15,7 +15,7 @@ import AboutPage from './pages/About';
 import AuthPage from './Auth/AuthPage';
 import Profile from './pages/Profile';
 import Jaybhatade from './components/SeriesSteaming';
-
+import SeriesPage from './pages/SeriesPage';
 const ProtectedRoute = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   if (loading) return <Loader />;
@@ -57,6 +57,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> },
       { path: "/about", element: <AboutPage /> },
       { path: "/movies", element: <MoviePage /> },
+      { path: "/series", element: <SeriesPage /> },
       { path: "/streamybot", element: <Chatbot /> },
       { path: "/search", element: <SearchPage /> },
     ],

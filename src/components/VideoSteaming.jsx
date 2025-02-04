@@ -30,7 +30,7 @@ const PlayerPage = () => {
   // TIll 
   return (
     <div className="">
-      <HeaderTwo title={"Movie Player"}/>
+      <HeaderTwo title={"Stream Hub"}/>
       <div className="w-full h-fit pt-20 ">
         <MoviePlayer movie={movie} />
 

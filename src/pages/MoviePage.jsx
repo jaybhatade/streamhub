@@ -3,7 +3,6 @@ import HeaderTwo from "../components/HeaderTwo";
 import ScrollComponent from "../components/ScrollComponent";
 import { movieList } from "../MovieData";
 import SeriesScroll from '../components/SeriesScroll';
-import { seriesList } from '../MovieData';
 
 function MoviePage() {
   useEffect(() => {
@@ -24,7 +23,6 @@ function MoviePage() {
       <ScrollComponent movies={movieList} startIndex={56} endIndex={67} headingTitle={"Horror Movies"} />
       
     <ScrollComponent movies={movieList} startIndex={67} endIndex={88} headingTitle={"Comedy Collection"}/>
-    <SeriesScroll series={seriesList} startIndex={0} endIndex={10} headingTitle={"Series Collection"}/>
     </div>
   );
 }
