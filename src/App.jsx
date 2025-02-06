@@ -15,6 +15,8 @@ import AuthPage from './Auth/AuthPage';
 import Profile from './pages/Profile';
 import Jaybhatade from './components/SeriesSteaming';
 import SeriesPage from './pages/SeriesPage';
+import UserInputForm from './components/form';
+
 const ProtectedRoute = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   if (loading) return <Loader />;
@@ -25,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
 const Layout = () => {
   const [progress, setProgress] = useState(0);
   const location = useLocation();
-  const isPlayerPage = location.pathname.startsWith('/player/') || location.pathname.startsWith('/series/');
+  const isPlayerPage = location.pathname.startsWith('/player/') || location.pathname.startsWith('/series/') || location.pathname.startsWith('/form');
 
   React.useEffect(() => {
     setProgress(100);
@@ -58,6 +60,7 @@ const router = createBrowserRouter([
       { path: "/movies", element: <MoviePage /> },
       { path: "/series", element: <SeriesPage /> },
       { path: "/search", element: <SearchPage /> },
+      { path: "/form", element: <UserInputForm /> },
     ],
   },
   {
