@@ -30,7 +30,7 @@ const Jaybhatade = () => {
 
   return (
     <div className="">
-      <HeaderTwo title={"Series"} />
+      <HeaderTwo title={"Stream Hub"} />
       <div className="w-full h-fit pt-20 ">
         <SeriesPlayer series={series} season={parseInt(season, 10)} episode={parseInt(episode, 10)} />
       </div>

@@ -12,13 +12,14 @@ function Home() {
     window.scrollTo(0, 0);
 }, []);
   return (
-    <div>
+    <div className=' '>
       <header>
         <Heading/>
       </header>
       
 
       <Mainslider />
+    <div className='bg-gradient-to-b from-black via-[#2296ad]/20 to-black'>
     <ScrollComponent movies={movieList} startIndex={35} endIndex={47} headingTitle={"Bollywood Action Movies"}/>
 
       <ScrollComponent movies={movieList} startIndex={67} endIndex={88} headingTitle={"Comedy Collection"}/>
@@ -30,6 +31,7 @@ function Home() {
       {/* <div className="w-full bg-red-300 h-[10vh] mt-8 flex justify-center items-center ">
         @StreamBox by Jay Bhatade
       </div> */}
+    </div>
     </div>
   );
 }

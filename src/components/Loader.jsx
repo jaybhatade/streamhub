@@ -6,7 +6,7 @@ function Loader() {
         visible={true}
         height="100"
         width="100"
-        color="Red"
+        color="#269FB6"
         ariaLabel="three-circles-loading"
         wrapperStyle={{}}
         wrapperClass=""

@@ -43,7 +43,7 @@ const MoviePlayer = ({ movie }) => {
         </div>
         <button
           onClick={toggleExpand}
-          className="text-red-600 hover:text-red-400 mt-1 focus:outline-none"
+          className="text-[#1d7283] hover:text-[#1d7283]/70 mt-1 focus:outline-none"
         >
           {isExpanded ? 'Less' : 'More'}
         </button>

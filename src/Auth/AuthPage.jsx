@@ -56,7 +56,7 @@ const AuthPage = ({ isLogin }) => {
   if (error) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-red-500 text-2xl">Error: {error.message}</div>
+        <div className="text-[#1d7283] text-2xl">Error: {error.message}</div>
       </div>
     );
   }
@@ -123,7 +123,7 @@ const AuthForm = ({ isLogin, onSubmit, onGoogleSignIn, isWebView }) => {
             type="email"
             autoComplete="email"
             required
-            className="bg-zinc-700 focus:ring-red-500 focus:border-red-500 block w-full pl-10 sm:text-sm border-gray-600 rounded-md text-white h-10"
+            className="bg-zinc-700 focus:ring-[#1d7283] focus:border-[#1d7283] block w-full pl-10 sm:text-sm border-gray-600 rounded-md text-white h-10"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -145,7 +145,7 @@ const AuthForm = ({ isLogin, onSubmit, onGoogleSignIn, isWebView }) => {
             type="password"
             autoComplete="current-password"
             required
-            className="bg-zinc-700 focus:ring-red-500 focus:border-red-500 block w-full pl-10 sm:text-sm border-gray-600 rounded-md text-white h-10"
+            className="bg-zinc-700 focus:ring-[#1d7283] focus:border-[#1d7283] block w-full pl-10 sm:text-sm border-gray-600 rounded-md text-white h-10"
             placeholder="********"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -156,7 +156,7 @@ const AuthForm = ({ isLogin, onSubmit, onGoogleSignIn, isWebView }) => {
       <div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1d7283] hover:bg-[#1d7283] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1d7283]"
         >
           {isLogin ? 'Log in' : 'Register Now'}
         </button>
@@ -175,15 +175,15 @@ const AuthForm = ({ isLogin, onSubmit, onGoogleSignIn, isWebView }) => {
         </div>
       )}
 
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-2 text-sm text-[#1d7283]">{error}</p>}
 
       <div className="text-sm text-center mt-6">
         {isLogin ? (
-          <Link to="/signup" className="font-medium text-red-700 hover:text-red-600">
-            Don't have an account? Sign up
+          <Link to="/signup" className="font-medium text-[#1d7283] hover:text-[#1d7283]">
+            Don&apos;t have an account? Sign up
           </Link>
         ) : (
-          <Link to="/login" className="font-medium text-red-700 hover:text-red-600">
+          <Link to="/login" className="font-medium text-[#1d7283] hover:text-[#1d7283]">
             Already have an account? Log in
           </Link>
         )}
@@ -191,13 +191,16 @@ const AuthForm = ({ isLogin, onSubmit, onGoogleSignIn, isWebView }) => {
     </form>
   );
 };
-
 const LoginForm = ({ isWebView }) => {
   const navigate = useNavigate();
 
   const handleLogin = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      
+      // Store the user's email in local storage
+      localStorage.setItem('userEmail', email);
+      
       navigate('/');
     } catch (error) {
       console.error("Error signing in:", error);
@@ -208,7 +211,12 @@ const LoginForm = ({ isWebView }) => {
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      
+      // Store the user's email in local storage
+      const userEmail = result.user.email;
+      localStorage.setItem('userEmail', userEmail);
+      
       navigate('/');
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -224,6 +232,10 @@ const SignUpForm = ({ isWebView }) => {
   const handleSignUp = async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Store the user's email in local storage
+      localStorage.setItem('userEmail', email);
+      
       navigate('/');
     } catch (error) {
       console.error("Error signing up:", error);
@@ -234,7 +246,12 @@ const SignUpForm = ({ isWebView }) => {
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      
+      // Store the user's email in local storage
+      const userEmail = result.user.email;
+      localStorage.setItem('userEmail', userEmail);
+      
       navigate('/');
     } catch (error) {
       console.error("Error signing up with Google:", error);
@@ -243,5 +260,4 @@ const SignUpForm = ({ isWebView }) => {
 
   return <AuthForm isLogin={false} onSubmit={handleSignUp} onGoogleSignIn={handleGoogleSignIn} isWebView={isWebView} />;
 };
-
 export default AuthPage;

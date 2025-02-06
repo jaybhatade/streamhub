@@ -14,3 +14,6 @@ StreamHub is a cutting-edge movie streaming platform that offers a user-friendly
 - Tailwind CSS
 - React Router
 - Firebase
+
+Colors:
+Primary:#269FB6

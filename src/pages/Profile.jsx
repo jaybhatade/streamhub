@@ -23,6 +23,7 @@ const Profile = () => {
     try {
       await signOut(auth);
       navigate('/login');
+      localStorage.removeItem('userEmail');
     } catch (error) {
       console.error('Error signing out: ', error);
     }
@@ -31,7 +32,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#269FB6]"></div>
       </div>
     );
   }
@@ -42,12 +43,13 @@ const Profile = () => {
   }
 
   return (
-    <div className='w-full  flex flex-col  '>
+    <div className='w-full h-screen '>
       <Header />
+      <div className='w-full h-full flex flex-col bg-gradient-to-b from-black via-[#2296ad]/20 to-black '>
       <div className=' flex items-center justify-center px-4 py-16'>
-        <div className="max-w-md w-full bg-zinc-900  shadow-lg rounded-lg overflow-hidden">
+        <div className="max-w-md w-full bg-black  shadow-xl rounded-2xl overflow-hidden">
           <div className="relative">
-            <div className="h-28 bg-gradient-to-t from-zinc-900 to-red-600"></div>
+            <div className="h-28 bg-gradient-to-t from-black to-[#269FB6]"></div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
               {user.photoURL ? (
                 <img
@@ -74,7 +76,7 @@ const Profile = () => {
                 
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-300"
+                className="bg-[#269FB6] hover:bg-[#269FB6] text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-300"
               >
                 <FaSignOutAlt className="mr-2" />
                 <span>Logout</span>
@@ -82,6 +84,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

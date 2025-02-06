@@ -42,7 +42,7 @@ const Mainslider = () => {
           <h1 className="text-2xl font-bold text-white ">{currentMovie.title}</h1>
           <p className="text-sm text-gray-400 mb-4">Genre: {currentMovie.genre}</p>
           <Link to={`/player/${currentMovie.id}`} className="inline-block">
-            <button className="bg-red-600 hover:bg-red-700 transition-all duration-300 text-white py-2 px-4 font-bold rounded-lg text-base">
+            <button className="bg-[#1d7283] hover:bg-[#1e545f] transition-all duration-300 text-white py-2 px-4 font-bold rounded-lg text-base">
               Watch Now
             </button>
           </Link>
@@ -83,9 +83,8 @@ const Mainslider = () => {
             </div>
             
             <Link to={`/player/${currentMovie.id}`} className="inline-block w-fit">
-              <button className="group relative px-8 py-4 bg-red-600 rounded-full font-medium text-white overflow-hidden transition-all duration-300 hover:bg-red-700">
+              <button className="group relative px-8 py-4 bg-[#1d7283] hover:bg-[#1e545f] rounded-full font-medium text-white overflow-hidden transition-all duration-300 ">
                 <span className="relative z-10">Watch Now</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
               </button>
             </Link>
           </div>

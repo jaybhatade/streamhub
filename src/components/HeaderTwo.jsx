@@ -12,7 +12,7 @@ function HeaderTwo({ title }) {
       >
         <button 
           onClick={() => navigate(-1)} 
-          className="hover:text-red-600 transition-all duration-300 ease-in-out"
+          className="hover:text-[#1d7283] transition-all duration-300 ease-in-out"
         >
           <IoMdArrowRoundBack size={30} />
         </button>

@@ -9,7 +9,6 @@ import Navigation from './components/bottomNavigation';
 import Home from './pages/Home';
 import PlayerPage from './components/VideoSteaming';
 import MoviePage from './pages/MoviePage';
-import Chatbot from './pages/Chatbot';
 import SearchPage from './pages/SearchPage';
 import AboutPage from './pages/About';
 import AuthPage from './Auth/AuthPage';
@@ -36,7 +35,7 @@ const Layout = () => {
     <div className="w-full h-fit min-h-screen bg-black text-white">
       <main className={isPlayerPage ? '' : 'pb-16'}>
         <LoadingBar
-          color='#B91C1C'
+          color='#269FB6'
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
@@ -58,7 +57,6 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/movies", element: <MoviePage /> },
       { path: "/series", element: <SeriesPage /> },
-      { path: "/streamybot", element: <Chatbot /> },
       { path: "/search", element: <SearchPage /> },
     ],
   },

@@ -41,7 +41,7 @@ const SeriesPlayer = ({ series, season, episode }) => {
               <p className={`text-gray-300 mt-1 ${isExpanded ? '' : 'line-clamp-3 md:line-clamp-2'}`}>{series.plot}</p>
               {!isExpanded && <div className="absolute bottom-0 right-0 bg-gradient-to-l from-black to-transparent w-full h-6" />}
             </div>
-            <button onClick={toggleExpand} className="text-red-600 hover:text-red-400 mt-1 focus:outline-none">
+            <button onClick={toggleExpand} className="text-[#1d7283] hover:text-[#1d7283]/80 mt-1 focus:outline-none">
               {isExpanded ? 'Less' : 'More'}
             </button>
           </div>
@@ -59,7 +59,7 @@ const SeriesPlayer = ({ series, season, episode }) => {
               {Array.from({ length: displayedEpisodes }, (_, i) => i + 1).map((ep) => (
                 <button
                   key={ep}
-                  className={`w-20 h-10 rounded-lg text-white border ${selectedEpisode === `${season}-${ep}` ? 'bg-red-600' : 'border-gray-600 hover:bg-gray-700'}`}
+                  className={`w-20 h-10 rounded-lg text-white border ${selectedEpisode === `${season}-${ep}` ? 'bg-[#1d7283]' : 'border-gray-600 hover:bg-gray-700'}`}
                   onClick={() => setSelectedEpisode(`${season}-${ep}`)}
                 >
                   {`Ep ${ep}`}
@@ -67,7 +67,7 @@ const SeriesPlayer = ({ series, season, episode }) => {
               ))}
             </div>
             {episodeCount > 20 && !showMore && (
-              <button onClick={() => setShowMore(true)} className="mt-2 text-red-600 hover:text-red-400">
+              <button onClick={() => setShowMore(true)} className="mt-2 text-[#1d7283] hover:text-[#1d7283]/80">
                 Show More
               </button>
             )}
