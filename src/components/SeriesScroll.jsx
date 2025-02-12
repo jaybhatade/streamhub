@@ -14,7 +14,7 @@ const SeriesScroll = ({ series, startIndex = 0, endIndex, headingTitle }) => {
         {slicedSeries.map((show) => (
           <Link
             key={show.id}
-            to={`/series/${show.id}/1/1`} // Defaulting to season 1, episode 1
+            to={`/series/${show.id}/${show.season}/1`} // Defaulting to season 1, episode 1
             className="flex-shrink-0 p-2 w-[150px] hover:scale-110 transition-all ease-in-out duration-300"
           >
             <img
@@ -23,7 +23,7 @@ const SeriesScroll = ({ series, startIndex = 0, endIndex, headingTitle }) => {
               className="w-full h-[200px] rounded-lg shadow-md object-cover"
             />
             <div className="pt-1">
-              <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{show.title}</h1>
+              <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{`S${show.season} ${show.title}`}</h1>
             </div>
           </Link>
         ))}

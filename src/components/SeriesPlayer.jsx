@@ -29,14 +29,14 @@ const SeriesPlayer = ({ series, season, episode }) => {
         <div className="w-full h-[200px] md:h-[400px] max-w-3xl mx-auto">
           <iframe
             src={`https://vidsrc.xyz/embed/tv/${series.id}/${selectedEpisode}`}
-            title={`${series.title} - Episode ${selectedEpisode}`}
+            title={`S${series.season} E${selectedEpisode} ${series.title}}`}
             className="w-full h-full rounded-lg shadow-md"
             allowFullScreen
           ></iframe>
         </div>
         <div className="flex flex-col justify-center md:justify-between items-center w-full md:w-[40%]">
           <div className="p-2 pb-4">
-            <h2 className="text-2xl font-bold text-white pt-3 md:pt-0 pb-1">{series.title}</h2>
+            <h2 className="text-2xl font-bold text-white pt-3 md:pt-0 pb-1">{`S${season} ${series.title}`}</h2>
             <div className="relative">
               <p className={`text-gray-300 mt-1 ${isExpanded ? '' : 'line-clamp-3 md:line-clamp-2'}`}>{series.plot}</p>
               {!isExpanded && <div className="absolute bottom-0 right-0 bg-gradient-to-l from-black to-transparent w-full h-6" />}

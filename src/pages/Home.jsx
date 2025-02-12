@@ -28,9 +28,6 @@ function Home() {
       <ScrollComponent movies={movieList} startIndex={20} endIndex={35} headingTitle={"Action Movies"} />
       
       <ScrollComponent movies={movieList} startIndex={46} endIndex={56} headingTitle={"Bollywood Horror Movies"} />
-      {/* <div className="w-full bg-red-300 h-[10vh] mt-8 flex justify-center items-center ">
-        @StreamBox by Jay Bhatade
-      </div> */}
     </div>
     </div>
   );

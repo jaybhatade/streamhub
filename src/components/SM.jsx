@@ -1,0 +1,109 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+
+// Assume seriesList is imported or defined here
+import { seriesList } from "../MovieData";
+
+const SM = () => {
+  const [currentSeries, setcurrentSeries] = useState(null);
+
+  const getRandomMovie = () => {
+    const randomIndex = Math.floor(Math.random() * seriesList.length);
+    return seriesList[randomIndex];
+  };
+
+  useEffect(() => {
+    setcurrentSeries(getRandomMovie());
+
+    const timer = setInterval(() => {
+      setcurrentSeries(getRandomMovie());
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!currentSeries) return null; // Or a loading state
+
+  return (
+    <div className="flex w-full h-auto md:h-auto justify-center bg-black">
+      {/* Mobile view */}
+      <div className="md:hidden w-full h-full relative">
+        <Link to={`/player/${currentSeries.id}`} className="block w-full h-full">
+          <img 
+            src={currentSeries.poster} 
+            alt={currentSeries.title} 
+            className="w-full h-full object-cover"
+          />
+        </Link>
+        {/* Top vignette */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black via-black/60 to-transparent"></div>
+        {/* Bottom gradient */}
+        <div className="absolute inset-x-0 bottom-[-2px] p-4 bg-gradient-to-t from-black via-black/80 to-transparent pt-16">
+          <h1 className="text-2xl font-bold text-white ">{currentSeries.title}</h1>
+          <p className="text-sm text-gray-400 mb-4">Genre: {currentSeries.genre}</p>
+          <Link to={`/player/${currentSeries.id}`} className="inline-block">
+            <button className="bg-[#1d7283] hover:bg-[#1e545f] transition-all duration-300 text-white py-2 px-4 font-bold rounded-lg text-base">
+              Watch Now
+            </button>
+          </Link>
+        </div>
+      </div>
+      {/* Desktop view */}
+      <div className="hidden md:flex w-full h-[400px] relative overflow-hidden">
+        {/* Background image with blur */}
+        <div className="absolute inset-0">
+          <img 
+            src={currentSeries.poster}
+            alt={currentSeries.title}
+            className="w-full h-full object-cover opacity-30 scale blur-md"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/90"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative w-full flex items-center justify-between px-12 py-8 z-10">
+          {/* Left Content */}
+          <div className="w-[70%] text-left flex flex-col justify-center space-y-6">
+            <h1 className="text-6xl font-bold text-white tracking-tight">{currentSeries.title}</h1>
+            <p className="text-lg text-gray-300 line-clamp-3 leading-relaxed font-light">{currentSeries.plot}</p>
+            
+            <div className="flex flex-wrap gap-4 text-sm">
+              <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                <span className="text-white">{currentSeries.runtime}</span>
+              </div>
+              <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                <span className="text-white">{currentSeries.genre}</span>
+              </div>
+              <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                <span className="text-white">{currentSeries.language}</span>
+              </div>
+              <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                <span className="text-white">{currentSeries.released}</span>
+              </div>
+            </div>
+            
+            <Link to={`/player/${currentSeries.id}`} className="inline-block w-fit">
+              <button className="group relative px-8 py-4 bg-[#1d7283] hover:bg-[#1e545f] rounded-full font-medium text-white overflow-hidden transition-all duration-300 ">
+                <span className="relative z-10">Watch Now</span>
+              </button>
+            </Link>
+          </div>
+
+          {/* Right Content - Poster */}
+          <div className="w-[25%] h-[300px]">
+            <div className="relative group">
+              <img 
+                src={currentSeries.poster} 
+                alt={currentSeries.title} 
+                className="w-full h-full object-cover rounded-2xl shadow-2xl transform transition-all duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 rounded-2xl shadow-[inset_0_-4px_12px_rgba(0,0,0,0.4)] group-hover:shadow-none transition-all duration-300"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SM;
