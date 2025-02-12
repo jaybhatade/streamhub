@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HeaderTwo from "../components/HeaderTwo";
 import { seriesList } from "../MovieData";
 import SeriesScroll from '../components/SeriesScroll';
-import SM from '../components/Sm'
+import SM from '../components/SM'
 
 function SeriesPage() {
   useEffect(() => {
