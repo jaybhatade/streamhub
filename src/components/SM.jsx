@@ -27,7 +27,7 @@ const SM = () => {
   return (
     <div className="flex w-full h-auto md:h-auto justify-center bg-black">
       {/* Mobile view */}
-      <div className="md:hidden w-full h-full relative">
+      <div className="md:hidden w-full h-[450px] relative">
         <Link to={`/player/${currentSeries.id}`} className="block w-full h-full">
           <img 
             src={currentSeries.poster} 

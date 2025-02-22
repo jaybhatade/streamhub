@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import HeaderTwo from "../components/HeaderTwo";
+import { Link } from 'react-router-dom';
 
 function Premium() {
     useEffect(() => {
@@ -10,9 +11,15 @@ function Premium() {
             <HeaderTwo title={"Premium"} />
             <div className='pt-16 flex w-full justify-center p-4 z-10'> {/* Added padding-top */}
                 <div className='w-fit h-fit items-center gap-8 flex-col rounded-lg p-4 flex'>
+                    <Link to={"/payment/V"}>
                     <img src="./images/offer1.png" alt="" className='w-[100%] max-w-[380px] relative left-[-5%] hover:scale-90 transition-all ease-in-out duration-300 z-[2]' />
+                    </Link>
+                    <Link to={"/payment/P"}>
                     <img src="./images/offer2.png" alt="" className='w-[100%] max-w-[350px] hover:scale-90 transition-all ease-in-out duration-300 z-[2]' />
+                    </Link>
+                    <Link to={"/payment/B"}>
                     <img src="./images/offer2 (1).png" alt="" className='w-[100%] max-w-[350px] hover:scale-90 transition-all ease-in-out duration-300 z-[2]' />
+                    </Link>
                 </div>
             </div>
         </div>

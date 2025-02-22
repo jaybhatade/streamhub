@@ -16,6 +16,8 @@ import Profile from './pages/Profile';
 import Jaybhatade from './components/SeriesSteaming';
 import SeriesPage from './pages/SeriesPage';
 import UserInputForm from './components/form';
+import Premium from './pages/Premium';
+import PaymentGateway from './pages/Payment';
 
 const ProtectedRoute = ({ children }) => {
   const [user, loading] = useAuthState(auth);
@@ -61,6 +63,8 @@ const router = createBrowserRouter([
       { path: "/series", element: <SeriesPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/form", element: <UserInputForm /> },
+      { path: "/premium", element: <Premium /> },
+      { path: "/payment/:id", element: <PaymentGateway /> },
     ],
   },
   {

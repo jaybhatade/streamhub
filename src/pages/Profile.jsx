@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../firebase'; // Ensure `db` is exported from your firebase config
 import { FaUser, FaEnvelope, FaSignOutAlt, FaPhone, FaHeart, FaEdit } from 'react-icons/fa';
-import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
+import HeaderTwo from '../components/HeaderTwo';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -65,12 +65,12 @@ const Profile = () => {
 
   return (
     <div className='w-full h-screen'>
-      <Header />
-      <div className='w-full h-full flex flex-col bg-gradient-to-b from-black via-[#2296ad]/20 to-black'>
+      <HeaderTwo title={"Profile"}/>
+      <div className='w-full h-full flex flex-col bg-zinc-950 justify-center '>
         <div className='flex items-center justify-center px-4 py-16'>
-          <div className="max-w-md w-full bg-black shadow-xl rounded-2xl overflow-hidden">
+          <div className="max-w-md w-full bg-black shadow-xl rounded-2xl overflow-hidden border-white border-[1px]">
             <div className="relative">
-              <div className="h-20 bg-gradient-to-t from-black to-[#269FB6]"></div>
+              <div className="h-20 bg-black"></div>
             </div>
             <div className="pt-0 pb-8 px-6">
               <div className="text-center">

@@ -12,6 +12,7 @@ import {
   signInWithPopup
 } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import LogoHeader from '../components/LogoHeader';
 
 const AuthPage = ({ isLogin }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -63,7 +64,7 @@ const AuthPage = ({ isLogin }) => {
 
   return (
     <>
-    <Heading />
+    <LogoHeader/>
     <div className="min-h-[90vh] bg-black flex flex-col lg:px-0">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-[10vh] text-center text-3xl font-extrabold text-white">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillHome } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { MdLocalMovies } from "react-icons/md";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { FaCrown } from "react-icons/fa"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navigation() {
@@ -46,7 +46,7 @@ function Navigation() {
             // This will be the 7th click, so we'll handle it in the useEffect
         } else {
             // Normal behavior: navigate to premium page
-            navigate('/profile');
+            navigate('/premium');
         }
     };
 
@@ -70,9 +70,9 @@ function Navigation() {
                         <BiSolidMoviePlay size={25} className={getLinkStyle("/series")} />
                         <h3 className="text-xs">Series</h3>
                     </Link>
-                    <Link to="/profile" className={`flex flex-col gap-1 items-center justify-between hover:text-[#269FB6] transition-all duration-200 ease-in-out ${getLinkStyle("/profile")}`} onClick={handlePremiumClick}>
-                        <FaUser size={25} className={getLinkStyle("/profile")} />
-                        <h3 className="text-xs">Profile</h3>
+                    <Link to="/premium" className={`flex flex-col gap-1 items-center text-yellow-200 justify-between hover:text-[#269FB6] transition-all duration-200 ease-in-out ${getLinkStyle("/premium")}`} onClick={handlePremiumClick}>
+                        <FaCrown size={25} className={getLinkStyle("/premium")} /> {/* Replaced FaUser with GiCrown */}
+                        <h3 className="text-xs">Premium</h3>
                     </Link>
                 </div>
             </div>
