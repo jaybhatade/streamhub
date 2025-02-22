@@ -8,7 +8,7 @@ function HeaderTwo({ title }) {
     <div className="">
       <div
         id="header"
-        className="w-full h-fit bg-black border-b-[1px] border-white md:bg-zinc-900 py-4 fixed top-0 flex justify-between items-center px-2 z-50"
+        className="w-full h-fit bg-black border-b-[1px] border-white md:bg-zinc-900 py-4 fixed top-0 flex justify-between items-center px-4 z-50"
       >
         <button 
           onClick={() => navigate(-1)} 

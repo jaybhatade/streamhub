@@ -63,13 +63,16 @@ const router = createBrowserRouter([
       { path: "/series", element: <SeriesPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/form", element: <UserInputForm /> },
-      { path: "/premium", element: <Premium /> },
-      { path: "/payment/:id", element: <PaymentGateway /> },
+      { path: "/premium", element: <Premium /> }
     ],
   },
   {
     path: "/login",
     element: <AuthPage isLogin={true} />
+  },
+  {
+    path: "/payment/:id",
+    element: <PaymentGateway isLogin={true} />
   },
   {
     path: "/signup", 

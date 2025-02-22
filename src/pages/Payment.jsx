@@ -7,6 +7,8 @@ import {
   FaQrcode,
   FaCheck 
 } from 'react-icons/fa';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase'; // Adjust the import based on your firebase configuration
 
 const PaymentGateway = () => {
   const { id } = useParams();
@@ -15,6 +17,7 @@ const PaymentGateway = () => {
   const [amount, setAmount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
 
   // Pricing packages array
   const packs = [
@@ -66,10 +69,20 @@ const PaymentGateway = () => {
     }
   ];
 
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     e.preventDefault();
-    // Payment processing logic would go here
-    alert(`Processing payment of ₹${amount} via ${selectedMethod}`);
+    const userEmail = localStorage.getItem('userEmail'); // Fetch user email from local storage
+    const packName = packs.find(pack => pack.Id === id)?.Name; // Get the package name
+    // Store data in Firebase
+    if (userEmail && packName) {
+      const userRef = doc(db, 'users', userEmail); // Use userEmail instead of user.uid
+      await setDoc(userRef, { packageName: packName }, { merge: true });
+      setShowPopup(true); // Show the confirmation popup
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate('/'); // Navigate to home after showing the popup
+      }, 2000); // Auto navigate after 2 seconds
+    }
   };
 
   if (loading) {
@@ -181,6 +194,15 @@ const PaymentGateway = () => {
         <p className="mt-4 text-xs text-center text-gray-500">
           By clicking Pay, you agree to our Terms and Conditions
         </p>
+
+        {showPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg shadow-lg text-center text-black">
+              <h3 className="text-lg font-semibold">Payment Confirmed!</h3>
+              <p className="mt-2">Thank you for your payment.</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

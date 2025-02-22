@@ -32,9 +32,6 @@ const UserInputForm = () => {
   const checkUserExists = async (email) => {
     const q = query(collection(db, 'users'), where('email', '==', email));
     const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      navigate('/'); // Redirect if user already exists
-    }
   };
 
   const handleInputChange = (field, value) => {
