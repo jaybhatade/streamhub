@@ -28,7 +28,7 @@ const SM = () => {
     <div className="flex w-full h-auto md:h-auto justify-center bg-black">
       {/* Mobile view */}
       <div className="md:hidden w-full h-[450px] relative">
-        <Link to={`/player/${currentSeries.id}`} className="block w-full h-full">
+        <Link to={`/series/${currentSeries.id}/${currentSeries.season}/1`} className="block w-full h-full">
           <img 
             src={currentSeries.poster} 
             alt={currentSeries.title} 
@@ -41,7 +41,7 @@ const SM = () => {
         <div className="absolute inset-x-0 bottom-[-2px] p-4 bg-gradient-to-t from-black via-black/80 to-transparent pt-16">
           <h1 className="text-2xl font-bold text-white ">{currentSeries.title}</h1>
           <p className="text-sm text-gray-400 mb-4">Genre: {currentSeries.genre}</p>
-          <Link to={`/player/${currentSeries.id}`} className="inline-block">
+          <Link to={`/series/${currentSeries.id}/${currentSeries.season}/1`} className="inline-block">
             <button className="bg-[#1d7283] hover:bg-[#1e545f] transition-all duration-300 text-white py-2 px-4 font-bold rounded-lg text-base">
               Watch Now
             </button>
@@ -82,7 +82,7 @@ const SM = () => {
               </div>
             </div>
             
-            <Link to={`/player/${currentSeries.id}`} className="inline-block w-fit">
+            <Link to={`/series/${currentSeries.id}/${currentSeries.season}/1`} className="inline-block w-fit">
               <button className="group relative px-8 py-4 bg-[#1d7283] hover:bg-[#1e545f] rounded-full font-medium text-white overflow-hidden transition-all duration-300 ">
                 <span className="relative z-10">Watch Now</span>
               </button>
