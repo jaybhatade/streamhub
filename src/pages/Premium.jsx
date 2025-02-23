@@ -9,9 +9,9 @@ function Premium() {
     const [loading, setLoading] = useState(true);
 
     const packages = [
-        { id: 'V',name:'Vip Pack', image: './images/offer1.png', maxWidth: '380px', leftOffset: '-5%' },
-        { id: 'P',name:'Premium Pack', image: './images/offer2.png', maxWidth: '350px', leftOffset: '0' },
-        { id: 'B',name:'Basic Pack', image: './images/offer2 (1).png', maxWidth: '350px', leftOffset: '0' }
+        { id: 'V',name:'Vip Pack', image: './images/sub1.png', maxWidth: '380px', leftOffset: '-5%' },
+        { id: 'P',name:'Premium Pack', image: './images/sub2.png', maxWidth: '350px', leftOffset: '0' },
+        { id: 'B',name:'Basic Pack', image: './images/sub3.png', maxWidth: '350px', leftOffset: '0' }
     ];
 
     useEffect(() => {
