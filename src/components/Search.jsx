@@ -7,12 +7,24 @@ const MovieSearch = () => {
   const [query, setQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [filteredSeries, setFilteredSeries] = useState([]);
+  const [mixedResults, setMixedResults] = useState([]);
+  const [randomMovies, setRandomMovies] = useState([]);
+  const [randomSeries, setRandomSeries] = useState([]);
+
+  useEffect(() => {
+    // Get 10 random movies and series on initial load
+    const shuffledMovies = [...movieList].sort(() => 0.5 - Math.random());
+    const shuffledSeries = [...seriesList].sort(() => 0.5 - Math.random());
+    setRandomMovies(shuffledMovies.slice(0, 10));
+    setRandomSeries(shuffledSeries.slice(0, 10));
+  }, []);
 
   const filterData = useCallback((searchQuery) => {
     const trimmedQuery = searchQuery.trim().toLowerCase();
     if (trimmedQuery === '') {
       setFilteredMovies([]);
       setFilteredSeries([]);
+      setMixedResults([]);
     } else {
       // Filter movies
       const filteredMovies = movieList.filter((movie) =>
@@ -25,6 +37,12 @@ const MovieSearch = () => {
         series.title.toLowerCase().includes(trimmedQuery)
       );
       setFilteredSeries(filteredSeries);
+
+      // Create mixed results
+      const mixed = [...filteredMovies.map(m => ({...m, type: 'movie'})), 
+                     ...filteredSeries.map(s => ({...s, type: 'series'}))]
+        .sort((a, b) => a.title.localeCompare(b.title));
+      setMixedResults(mixed);
     }
   }, []);
 
@@ -57,26 +75,78 @@ const MovieSearch = () => {
         className="w-full px-4 py-2 mb-4 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#269FB6]"
       />
 
-      {/* Display Movies */}
+      {/* Show random content when no search query */}
+      {query.trim() === '' && (
+        <>
+          {/* Random Movies */}
+          <div className="pt-4">
+            <div className="text-2xl text-white pl-2">Suggested Movies</div>
+            <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide py-2"
+                 style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
+              {randomMovies.map((movie) => (
+                <Link
+                  key={movie.id}
+                  to={`/player/${movie.id}`}
+                  className="flex-shrink-0 p-2 w-[150px] hover:scale-110 transition-all ease-in-out duration-300"
+                >
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="w-full h-[200px] rounded-lg shadow-md object-cover"
+                  />
+                  <div className="pt-1">
+                    <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{movie.title}</h1>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Random Series */}
+          <div className="pt-4">
+            <div className="text-2xl text-white pl-2">Suggested Series</div>
+            <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide py-2"
+                 style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
+              {randomSeries.map((show) => (
+                <Link
+                  key={show.id}
+                  to={`/series/${show.id}/${show.season}/1`}
+                  className="flex-shrink-0 p-2 w-[150px] hover:scale-110 transition-all ease-in-out duration-300"
+                >
+                  <img
+                    src={show.poster}
+                    alt={show.title}
+                    className="w-full h-[200px] rounded-lg shadow-md object-cover"
+                  />
+                  <div className="pt-1">
+                    <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{`S${show.season} ${show.title}`}</h1>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Movies Scroll */}
       {filteredMovies.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xl font-bold text-white mb-4">Movies</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+        <div className="pt-4">
+          <div className="text-2xl text-white pl-2">Movies</div>
+          <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide py-2"
+               style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
             {filteredMovies.map((movie) => (
               <Link
-                to={`/player/${movie.id}`}
                 key={movie.id}
-                className="block"
+                to={`/player/${movie.id}`}
+                className="flex-shrink-0 p-2 w-[150px] hover:scale-110 transition-all ease-in-out duration-300"
               >
-                <div className="rounded-lg shadow-md overflow-hidden h-full hover:scale-105 duration-300 ease-in-out transition-all">
-                  <div className="p-2">
-                    <img
-                      src={movie.poster}
-                      alt={movie.title}
-                      className="w-full h-56 md:h-40 lg:h-56 object-cover rounded-lg mb-2"
-                    />
-                    <p className="text-sm text-center line-clamp-2">{movie.title}</p>
-                  </div>
+                <img
+                  src={movie.poster}
+                  alt={movie.title}
+                  className="w-full h-[200px] rounded-lg shadow-md object-cover"
+                />
+                <div className="pt-1">
+                  <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{movie.title}</h1>
                 </div>
               </Link>
             ))}
@@ -84,15 +154,16 @@ const MovieSearch = () => {
         </div>
       )}
 
-      {/* Display Series */}
+      {/* Series Scroll */}
       {filteredSeries.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xl font-bold text-white mb-4">Series</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+        <div className="pt-4">
+          <div className="text-2xl text-white pl-2">Series</div>
+          <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide py-2"
+               style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
             {filteredSeries.map((show) => (
               <Link
                 key={show.id}
-                to={`/series/${show.id}/${show.season}/1`} // Defaulting to season 1, episode 1
+                to={`/series/${show.id}/${show.season}/1`}
                 className="flex-shrink-0 p-2 w-[150px] hover:scale-110 transition-all ease-in-out duration-300"
               >
                 <img
@@ -102,6 +173,33 @@ const MovieSearch = () => {
                 />
                 <div className="pt-1">
                   <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">{`S${show.season} ${show.title}`}</h1>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Mixed Results Grid */}
+      {mixedResults.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-2xl text-white pl-2 mb-4">All Results</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+            {mixedResults.map((item) => (
+              <Link
+                key={item.id}
+                to={item.type === 'movie' ? `/player/${item.id}` : `/series/${item.id}/${item.season}/1`}
+                className="hover:scale-110 transition-all ease-in-out duration-300"
+              >
+                <img
+                  src={item.poster}
+                  alt={item.title}
+                  className="w-full h-[200px] rounded-lg shadow-md object-cover"
+                />
+                <div className="pt-1">
+                  <h1 className="text-xs text-[#cfcfcf] line-clamp-2 overflow-hidden">
+                    {item.type === 'series' ? `S${item.season} ${item.title}` : item.title}
+                  </h1>
                 </div>
               </Link>
             ))}

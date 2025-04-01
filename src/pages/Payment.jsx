@@ -5,7 +5,8 @@ import {
   FaWallet, 
   FaUniversity, 
   FaQrcode,
-  FaCheck 
+  FaCheck,
+  FaExclamationCircle
 } from 'react-icons/fa';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Adjust the import based on your firebase configuration
@@ -17,7 +18,14 @@ const PaymentGateway = () => {
   const [amount, setAmount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+  const [showPopup, setShowPopup] = useState(false);
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [upiId, setUpiId] = useState('');
+  const [selectedBank, setSelectedBank] = useState('');
+  const [walletNumber, setWalletNumber] = useState('');
+  const [formErrors, setFormErrors] = useState({});
 
   // Pricing packages array
   const packs = [
@@ -69,19 +77,108 @@ const PaymentGateway = () => {
     }
   ];
 
+  const validateForm = () => {
+    const errors = {};
+    
+    if (selectedMethod === 'card') {
+      // Card number validation - must be 16 digits
+      const cardNumberClean = cardNumber.replace(/\s/g, '');
+      if (!cardNumberClean.match(/^\d{16}$/)) {
+        errors.cardNumber = 'Card number must be 16 digits';
+      }
+
+      // Expiry date validation - must be MM/YY format and not expired
+      const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+      if (!expiryRegex.test(expiryDate)) {
+        errors.expiryDate = 'Invalid expiry date format (MM/YY)';
+      } else {
+        const [month, year] = expiryDate.split('/');
+        const expiry = new Date(2000 + parseInt(year), parseInt(month) - 1);
+        if (expiry < new Date()) {
+          errors.expiryDate = 'Card has expired';
+        }
+      }
+
+      // CVV validation - must be 3 digits
+      if (!cvv.match(/^\d{3}$/)) {
+        errors.cvv = 'CVV must be 3 digits';
+      }
+    } else if (selectedMethod === 'upi') {
+      // UPI ID validation
+      const upiRegex = /^[a-zA-Z0-9.\-_]{2,49}@[a-zA-Z._]{2,49}$/;
+      if (!upiId || !upiRegex.test(upiId)) {
+        errors.upiId = 'Please enter a valid UPI ID (e.g., username@upi)';
+      }
+    } else if (selectedMethod === 'netbanking') {
+      // Net Banking validation
+      if (!selectedBank) {
+        errors.selectedBank = 'Please select your bank';
+      }
+    } else if (selectedMethod === 'wallet') {
+      // Wallet number validation
+      if (!walletNumber.match(/^\d{10}$/)) {
+        errors.walletNumber = 'Please enter a valid 10-digit wallet number';
+      }
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleCardNumberChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    // Add space after every 4 digits
+    value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    // Limit to 16 digits + spaces
+    value = value.substring(0, 19);
+    setCardNumber(value);
+  };
+
+  const handleExpiryDateChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    setExpiryDate(value);
+  };
+
+  const handleCvvChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.substring(0, 3);
+    setCvv(value);
+  };
+
+  const handleUpiIdChange = (e) => {
+    setUpiId(e.target.value);
+  };
+
+  const handleBankChange = (e) => {
+    setSelectedBank(e.target.value);
+  };
+
+  const handleWalletNumberChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setWalletNumber(value.substring(0, 10));
+  };
+
   const handlePayment = async (e) => {
     e.preventDefault();
-    const userEmail = localStorage.getItem('userEmail'); // Fetch user email from local storage
-    const packName = packs.find(pack => pack.Id === id)?.Name; // Get the package name
-    // Store data in Firebase
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    const userEmail = localStorage.getItem('userEmail');
+    const packName = packs.find(pack => pack.Id === id)?.Name;
+    
     if (userEmail && packName) {
-      const userRef = doc(db, 'users', userEmail); // Use userEmail instead of user.uid
+      const userRef = doc(db, 'users', userEmail);
       await setDoc(userRef, { packageName: packName }, { merge: true });
-      setShowPopup(true); // Show the confirmation popup
+      setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        navigate('/'); // Navigate to home after showing the popup
-      }, 2000); // Auto navigate after 2 seconds
+        navigate('/');
+      }, 2000);
     }
   };
 
@@ -147,49 +244,178 @@ const PaymentGateway = () => {
           ))}
         </div>
 
-        {selectedMethod === 'card' && (
-          <form onSubmit={handlePayment} className="mt-6 space-y-4">
+        <form onSubmit={handlePayment} className="mt-6 space-y-4">
+          {selectedMethod === 'card' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Card Number
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
+                    className={`w-full text-black px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                      formErrors.cardNumber ? 'border-red-500 bg-red-50' : ''
+                    }`}
+                  />
+                  {formErrors.cardNumber && (
+                    <div className="absolute right-3 top-2 text-red-500">
+                      <FaExclamationCircle />
+                    </div>
+                  )}
+                </div>
+                {formErrors.cardNumber && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.cardNumber}</p>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Expiry Date
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="MM/YY"
+                      value={expiryDate}
+                      onChange={handleExpiryDateChange}
+                      className={`w-full px-3 py-2 text-black border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                        formErrors.expiryDate ? 'border-red-500 bg-red-50' : ''
+                      }`}
+                    />
+                    {formErrors.expiryDate && (
+                      <div className="absolute right-3 top-2 text-red-500">
+                        <FaExclamationCircle />
+                      </div>
+                    )}
+                  </div>
+                  {formErrors.expiryDate && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.expiryDate}</p>
+                  )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    CVV
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="123"
+                      value={cvv}
+                      onChange={handleCvvChange}
+                      className={`w-full text-black px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                        formErrors.cvv ? 'border-red-500 bg-red-50' : ''
+                      }`}
+                    />
+                    {formErrors.cvv && (
+                      <div className="absolute right-3 top-2 text-red-500">
+                        <FaExclamationCircle />
+                      </div>
+                    )}
+                  </div>
+                  {formErrors.cvv && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.cvv}</p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {selectedMethod === 'upi' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Card Number
+                UPI ID
               </label>
-              <input
-                type="text"
-                placeholder="1234 5678 9012 3456"
-                className="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Expiry Date
-                </label>
+              <div className="relative">
                 <input
                   type="text"
-                  placeholder="MM/YY"
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="username@upi"
+                  value={upiId}
+                  onChange={handleUpiIdChange}
+                  className={`w-full px-3 text-black py-2 textborder rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                    formErrors.upiId ? 'border-red-500 bg-red-50' : ''
+                  }`}
                 />
+                {formErrors.upiId && (
+                  <div className="absolute right-3 top-2 text-red-500">
+                    <FaExclamationCircle />
+                  </div>
+                )}
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  CVV
-                </label>
-                <input
-                  type="text"
-                  placeholder="123"
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
+              {formErrors.upiId && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.upiId}</p>
+              )}
             </div>
-          </form>
-        )}
+          )}
 
-        <button
-          onClick={handlePayment}
-          className="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-        >
-          Pay ₹{amount}
-        </button>
+          {selectedMethod === 'netbanking' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Select Bank
+              </label>
+              <div className="relative">
+                <select
+                  value={selectedBank}
+                  onChange={handleBankChange}
+                  className={`w-full px-3 text-black py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                    formErrors.selectedBank ? 'border-red-500 bg-red-50' : ''
+                  }`}
+                >
+                  <option value="">Select your bank</option>
+                  <option value="hdfc">HDFC Bank</option>
+                  <option value="icici">ICICI Bank</option>
+                  <option value="sbi">State Bank of India</option>
+                  <option value="axis">Axis Bank</option>
+                </select>
+                {formErrors.selectedBank && (
+                  <div className="absolute right-3 top-2 text-red-500">
+                    <FaExclamationCircle />
+                  </div>
+                )}
+              </div>
+              {formErrors.selectedBank && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.selectedBank}</p>
+              )}
+            </div>
+          )}
+
+          {selectedMethod === 'wallet' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Wallet Number
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Enter 10-digit wallet number"
+                  value={walletNumber}
+                  onChange={handleWalletNumberChange}
+                  className={`w-full text-black px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+                    formErrors.walletNumber ? 'border-red-500 bg-red-50' : ''
+                  }`}
+                />
+                {formErrors.walletNumber && (
+                  <div className="absolute right-3 top-2 text-red-500">
+                    <FaExclamationCircle />
+                  </div>
+                )}
+              </div>
+              {formErrors.walletNumber && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.walletNumber}</p>
+              )}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Pay ₹{amount}
+          </button>
+        </form>
 
         <p className="mt-4 text-xs text-center text-gray-500">
           By clicking Pay, you agree to our Terms and Conditions
